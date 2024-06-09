@@ -1,0 +1,176 @@
+==============================
+Bullet
+==============================
+
+    A class representing a bullet in the game.
+
+    Attributes:
+        image (pygame.Surface): The image of the bullet.
+        rect (pygame.Rect): The rectangular area of the bullet.
+        speed (int): The speed of the bullet.
+        direction (int): The direction of the bullet.
+
+
+==============================
+Decoration
+==============================
+
+    A class representing a decoration object in the game.
+
+
+==============================
+Exit
+==============================
+
+    A class representing an exit object in the game.
+
+
+==============================
+Explosion
+==============================
+
+    A class representing an explosion in the game.
+
+    Attributes:
+        images (list): A list of images for the explosion animation.
+        frame_index (int): The current frame index for the explosion animation.
+        image (pygame.Surface): The current image of the explosion.
+        rect (pygame.Rect): The rectangular area of the explosion.
+        counter (int): A counter to control the speed of the animation.
+
+
+==============================
+ExtraObject
+==============================
+
+    A class representing an extra object in the game.
+
+    Attributes:
+        image (pygame.Surface): The image of the object.
+        rect (pygame.Rect): The rectangular area of the object.
+
+
+==============================
+Grenade
+==============================
+
+    A class representing a grenade in the game.
+
+    Attributes:
+        timer (int): The timer for the grenade explosion.
+        vel_y (float): The vertical velocity of the grenade.
+        speed (int): The speed of the grenade.
+        image (pygame.Surface): The image of the grenade.
+        rect (pygame.Rect): The rectangular area of the grenade.
+        direction (int): The direction of the grenade.
+        width (int): The width of the grenade.
+        height (int): The height of the grenade.
+
+
+==============================
+HealthBar
+==============================
+
+    A class representing the health bar of the player.
+
+    Attributes:
+        x (int): The x-coordinate of the health bar.
+        y (int): The y-coordinate of the health bar.
+        health (int): The current health of the player.
+        max_health (int): The maximum health of the player.
+
+
+==============================
+ItemBox
+==============================
+
+    A class representing an item box in the game.
+
+    Attributes:
+        item_type (str): The type of the item.
+        image (pygame.Surface): The image of the item box.
+        rect (pygame.Rect): The rectangular area of the item box.
+
+
+==============================
+Soldier
+==============================
+
+    A class representing a soldier in the game.
+
+    Attributes:
+        char_type (str): The type of the character (player or enemy).
+        x (int): The x-coordinate of the soldier.
+        y (int): The y-coordinate of the soldier.
+        scale (float): The scale of the soldier sprite.
+        speed (int): The speed of the soldier.
+        ammo (int): The amount of ammo the soldier has.
+        grenades (int): The number of grenades the soldier has.
+        alive (bool): The status of the soldier's life.
+        y_vel (int): The vertical velocity of the soldier.
+        in_air (bool): Whether the soldier is in the air.
+        start_ammo (int): The initial amount of ammo the soldier has.
+        shoot_cooldown (int): The cooldown period between shots.
+        health (int): The current health of the soldier.
+        max_health (int): The maximum health of the soldier.
+        direction (int): The direction the soldier is facing (1 for right, -1 for left).
+        jump (bool): Whether the soldier is in a jump state.
+        flip (bool): Whether the soldier's image is flipped horizontally.
+        action (int): The current action being performed by the soldier.
+        animation_list (list): A list of lists containing animation frames for different actions.
+        frame_index (int): The current frame index of the animation.
+        update_time (int): The time when the animation frame was last updated.
+        move_counter (int): A counter to manage AI movement.
+        vision (pygame.Rect): The rectangular area representing the soldier's vision.
+        idling (bool): Whether the soldier is idling.
+        idling_counter (int): A counter to manage idling behavior.
+        image (pygame.Surface): The current image of the soldier.
+        rect (pygame.Rect): The rectangular area of the soldier.
+        width (int): The width of the soldier's image.
+        height (int): The height of the soldier's image.
+
+
+==============================
+Water
+==============================
+
+    A class representing a water object in the game.
+
+
+==============================
+World
+==============================
+
+    A class representing the game world.
+
+    Attributes:
+        level_length (int): The length of the level.
+        obstacle_list (list): The list of obstacles in the world.
+
+
+==============================
+draw_bg
+==============================
+
+    Draw the background on the screen.
+
+
+==============================
+draw_text
+==============================
+
+    Draw text on the screen.
+
+    Args:
+        text (str): The text to render.
+        font (pygame.font.Font): The font to use.
+        text_col (tuple): The color of the text.
+        x (int): The x-coordinate of the text.
+        y (int): The y-coordinate of the text.
+
+
+==============================
+reset_level
+==============================
+
+    Reset the current game level by clearing all groups.
