@@ -49,7 +49,7 @@ shot_fx = pygame.mixer.Sound('audio/m1-garand-rifle-80192.mp3')
 shot_fx.set_volume(0.05)
 grenade_fx = pygame.mixer.Sound('audio/grenade-explosion-14-190266.mp3')
 grenade_fx.set_volume(0.5)
-death_fx = pygame.mixer.Sound('audio/man-death-scream-186763.mp3')
+death_fx = pygame.mixer.Sound('audio/man-death-scream-186763.wav')
 death_fx.set_volume(0.5)
 # playerdeath_fx = pygame.mixer.Sound('audio/howie-scream-105591.mp3')
 # playerdeath_fx.set_volume(0.5)
@@ -760,11 +760,11 @@ class Grenade(pygame.sprite.Sprite):
         self.vel_y += GRAVITY
         dx = self.speed * self.direction
         dy = self.vel_y
-        # check collsion with walls
-        if self.rect.left + dx < 0 or self.rect.right + dx > SCREEN_WIDTH:
-            self.direction *= -1
-            dx = self.speed * self.direction
-
+        # # check collsion with walls
+        # if self.rect.left + dx < 0 or self.rect.right + dx > SCREEN_WIDTH:
+        #     self.direction *= -1
+        #     dx = self.speed * self.direction
+    
         # check if landed on ground
         for tile in world.obstacle_list:
             if tile[1].colliderect(self.rect.x+dx, self.rect.y, self.width, self.height):
@@ -778,19 +778,21 @@ class Grenade(pygame.sprite.Sprite):
                     self.vel_y = 0
                 # check if hit top
                 else:
+                    self.vel_y = 0
                     dy =  tile[1].bottom - self.rect.top
 
         self.rect.x += dx + screen_scroll
         self.rect.y += dy
 
-        # count down timer
+
+		#countdown timer
         self.timer -= 1
-        if self.timer == 0:
+        if self.timer <= 0:
             self.kill()
             grenade_fx.play()
             explosion = Explosion(self.rect.x, self.rect.y, 0.5)
             explosion_group.add(explosion)
-            
+            #do damage to anyone that is nearby
             if abs(self.rect.centerx - player.rect.centerx) < TILE_SIZE * 2 and \
                 abs(self.rect.centery - player.rect.centery) < TILE_SIZE * 2:
                 player.health -= 50
@@ -801,30 +803,19 @@ class Grenade(pygame.sprite.Sprite):
 
 class Explosion(pygame.sprite.Sprite):
     """
-    A class representing an explosion in the game.
-
-    Attributes:
-        images (list): A list of images for the explosion animation.
-        frame_index (int): The current frame index for the explosion animation.
-        image (pygame.Surface): The current image of the explosion.
-        rect (pygame.Rect): The rectangular area of the explosion.
-        counter (int): A counter to control the speed of the animation.
-    """
-    def __init__(self, x, y, scale):
-        """
         Initialize the explosion.
 
         Args:
             x (int): The x-coordinate of the explosion.
             y (int): The y-coordinate of the explosion.
             scale (float): The scale of the explosion.
-        """
-
+    """
+    def __init__(self, x, y, scale):
         pygame.sprite.Sprite.__init__(self)
         self.images = []
-        for i in range(1, 6):
-            img = pygame.image.load(f'img/explosion/exp{i}.png')
-            img = pygame.transform.scale(img, (int(img.get_width()*scale), int(img.get_height()*scale)))
+        for num in range(1, 6):
+            img = pygame.image.load(f'img/explosion/exp{num}.png').convert_alpha()
+            img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
             self.images.append(img)
         self.frame_index = 0
         self.image = self.images[self.frame_index]
@@ -832,20 +823,24 @@ class Explosion(pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.counter = 0
 
+
     def update(self):
-        """
-        Update the state of the explosion.
-        """
         #scroll
         self.rect.x += screen_scroll
+
         EXPLOSION_SPEED = 4
+        #update explosion amimation
         self.counter += 1
+
         if self.counter >= EXPLOSION_SPEED:
+            self.counter = 0
             self.frame_index += 1
-            if self.frame_index == len(self.images):
+            #if the animation is complete then delete the explosion
+            if self.frame_index >= len(self.images):
                 self.kill()
             else:
-                self.image = self.images[self.frame_index] 
+                self.image = self.images[self.frame_index]
+
 
 # create button
 start_button = button.Button(SCREEN_WIDTH//2-130, SCREEN_HEIGHT//2-150, start_img, 1)
@@ -908,7 +903,7 @@ if __name__ == '__main__':
                 enemy.update()
                 enemy.draw()
                 enemy.ai()
-
+            
             
             # update and draw bullets
 
